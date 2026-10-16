@@ -6,12 +6,12 @@ no EPLAN installation, no server, no upload. Everything is parsed and
 rendered locally on your device, on desktop and mobile.
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
-[![Latest release](https://img.shields.io/github/v/release/covagashi/ecad-view?sort=semver)](https://github.com/covagashi/ecad-view/releases)
-[![CI](https://github.com/covagashi/ecad-view/actions/workflows/ci.yml/badge.svg)](https://github.com/covagashi/ecad-view/actions/workflows/ci.yml)
+[![Latest release](https://img.shields.io/github/v/release/Canary-ECAD/ecad-view?sort=semver)](https://github.com/Canary-ECAD/ecad-view/releases)
+[![CI](https://github.com/Canary-ECAD/ecad-view/actions/workflows/ci.yml/badge.svg)](https://github.com/Canary-ECAD/ecad-view/actions/workflows/ci.yml)
 
-📥 **Downloads:** [Releases](https://github.com/covagashi/ecad-view/releases) ·
-📖 **User guide:** [Wiki](https://github.com/covagashi/ecad-view/wiki) ·
-**Source:** [github.com/covagashi/ecad-view](https://github.com/covagashi/ecad-view)
+📥 **Downloads:** [Releases](https://github.com/Canary-ECAD/ecad-view/releases) ·
+📖 **User guide:** [Wiki](https://github.com/Canary-ECAD/ecad-view/wiki) ·
+**Source:** [github.com/Canary-ECAD/ecad-view](https://github.com/Canary-ECAD/ecad-view)
 
 > **Disclaimer:** this is an independent community project. It is not
 > affiliated with, endorsed by, or supported by EPLAN GmbH & Co. KG.
@@ -28,7 +28,7 @@ rendered locally on your device, on desktop and mobile.
 ## Install
 
 Prefer a native build? Grab one from the
-[**Releases**](https://github.com/covagashi/ecad-view/releases) page:
+[**Releases**](https://github.com/Canary-ECAD/ecad-view/releases) page:
 
 | Platform | Download | Notes |
 | --- | --- | --- |
@@ -37,7 +37,7 @@ Prefer a native build? Grab one from the
 | **Android** | `.apk` | Sideload; the release APK is self-signed (not from Play Store). |
 | **iOS** | Xcode project | Build & sign in Xcode, or just install the PWA from Safari. |
 
-See the [**user guide (Wiki)**](https://github.com/covagashi/ecad-view/wiki) for
+See the [**user guide (Wiki)**](https://github.com/Canary-ECAD/ecad-view/wiki) for
 how to open a project, navigate the 3D/schematics, and export a `.epdz` from
 EPLAN. Packaging details live in
 [`docs/native-shells.md`](docs/native-shells.md) and
@@ -104,7 +104,7 @@ file): *File → Publish → Smart Production Collection* in EPLAN Electric P8
 (2022 or newer), or run the
 [`tools/eplan/PublishEpdz.cs`](tools/eplan/PublishEpdz.cs) script. Step-by-step
 instructions (and what the export does and doesn't contain) are in the
-[**wiki**](https://github.com/covagashi/ecad-view/wiki/Exporting-a-Project-from-EPLAN).
+[**wiki**](https://github.com/Canary-ECAD/ecad-view/wiki/Exporting-a-Project-from-EPLAN).
 
 ## Repository layout
 

@@ -60,8 +60,8 @@ interactions are fast.
 ### Can I contribute / report a bug?
 
 Yes — issues and pull requests are welcome on
-[GitHub](https://github.com/covagashi/ecad-view). See
-[CONTRIBUTING.md](https://github.com/covagashi/ecad-view/blob/main/CONTRIBUTING.md).
+[GitHub](https://github.com/Canary-ECAD/ecad-view). See
+[CONTRIBUTING.md](https://github.com/Canary-ECAD/ecad-view/blob/main/CONTRIBUTING.md).
 
 ### Is this an official EPLAN product?
 

@@ -19,7 +19,7 @@ The repository ships a helper script that calls the exact same action the UI
 uses:
 
 1. In EPLAN, go to **Tools → Scripts → Load** and select
-   [`tools/eplan/PublishEpdz.cs`](https://github.com/covagashi/ecad-view/blob/main/tools/eplan/PublishEpdz.cs).
+   [`tools/eplan/PublishEpdz.cs`](https://github.com/Canary-ECAD/ecad-view/blob/main/tools/eplan/PublishEpdz.cs).
 2. Edit the two path constants at the top of the script — the project `.elk`
    file and the output folder.
 3. Run the script. It invokes the `projectmanagement`
@@ -38,4 +38,4 @@ The export contains only what EPLAN publishes:
 > *before* publishing. If you want them in the viewer, generate them first.
 
 For the low-level details of the formats, see the
-[file-format notes](https://github.com/covagashi/ecad-view/blob/main/docs/formats.md).
+[file-format notes](https://github.com/Canary-ECAD/ecad-view/blob/main/docs/formats.md).

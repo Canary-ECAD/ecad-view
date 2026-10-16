@@ -24,12 +24,12 @@ Wiki links use the `[[Page Name]]` syntax; images are referenced by absolute
 The wiki repo (`ecad-view.wiki.git`) only exists **after** the first page is
 created once through the web UI:
 
-1. Open **https://github.com/covagashi/ecad-view/wiki** and click
+1. Open **https://github.com/Canary-ECAD/ecad-view/wiki** and click
    **Create the first page** → Save (any content; it will be overwritten).
 2. Push these files:
 
    ```bash
-   git clone https://github.com/covagashi/ecad-view.wiki.git
+   git clone https://github.com/Canary-ECAD/ecad-view.wiki.git
    cp wiki/*.md ecad-view.wiki/
    cd ecad-view.wiki
    git add -A && git commit -m "Populate wiki" && git push

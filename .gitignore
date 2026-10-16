@@ -16,3 +16,6 @@ dist-packages/
 # .impeccable/design.json y config.json sí se versionan)
 .impeccable/live/sessions/
 .tmp-audit/
+
+# Crash dumps from Git Bash / MSYS
+*.stackdump

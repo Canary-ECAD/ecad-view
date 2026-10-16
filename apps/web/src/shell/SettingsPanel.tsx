@@ -123,7 +123,7 @@ export function SettingsPanel({ onClose, showTheme = false }: SettingsPanelProps
       <div className="rail-pop-title">{t("settings.links")}</div>
       <a
         className="rail-pop-action"
-        href="https://github.com/covagashi/ecad-view"
+        href="https://github.com/Canary-ECAD/ecad-view"
         target="_blank"
         rel="noreferrer"
       >

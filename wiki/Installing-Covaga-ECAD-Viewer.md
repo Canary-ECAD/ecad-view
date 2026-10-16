@@ -23,7 +23,7 @@ Once installed it keeps working without a network connection.
 ## Native desktop & mobile builds
 
 Tagged releases publish native builds on the
-[**Releases**](https://github.com/covagashi/ecad-view/releases) page:
+[**Releases**](https://github.com/Canary-ECAD/ecad-view/releases) page:
 
 | Platform | Artifact | Notes |
 | --- | --- | --- |
@@ -34,7 +34,7 @@ Tagged releases publish native builds on the
 > **macOS:** there is no prebuilt `.dmg` yet. You can run the web app / PWA
 > today, or build the Tauri desktop shell locally (requires the Rust
 > toolchain) — see
-> [`docs/native-shells.md`](https://github.com/covagashi/ecad-view/blob/main/docs/native-shells.md).
+> [`docs/native-shells.md`](https://github.com/Canary-ECAD/ecad-view/blob/main/docs/native-shells.md).
 
 ### Windows: "Windows protected your PC"
 
@@ -47,7 +47,7 @@ from source).
 Requires Node.js ≥ 20.
 
 ```bash
-git clone https://github.com/covagashi/ecad-view
+git clone https://github.com/Canary-ECAD/ecad-view
 cd ecad-view
 npm install
 npm run dev      # start the viewer (Vite dev server), then open the printed URL
@@ -55,4 +55,4 @@ npm run build    # production build (packages/e3d-core + apps/web)
 ```
 
 Native shells (Tauri desktop, Capacitor mobile) are documented in
-[`docs/native-shells.md`](https://github.com/covagashi/ecad-view/blob/main/docs/native-shells.md).
+[`docs/native-shells.md`](https://github.com/Canary-ECAD/ecad-view/blob/main/docs/native-shells.md).

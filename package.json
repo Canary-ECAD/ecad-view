@@ -6,7 +6,7 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/covagashi/ecad-view.git"
+    "url": "https://github.com/Canary-ECAD/ecad-view.git"
   },
   "type": "module",
   "workspaces": [

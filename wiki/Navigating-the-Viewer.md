@@ -4,7 +4,7 @@ A tour of the four views and the things that aren't obvious at first glance.
 
 ## 3D view
 
-![3D viewer](https://raw.githubusercontent.com/covagashi/ecad-view/main/docs/screenshots/viewer-3d.png)
+![3D viewer](https://raw.githubusercontent.com/Canary-ECAD/ecad-view/main/docs/screenshots/viewer-3d.png)
 
 - **Orbit / zoom / pan** — drag to orbit, scroll (or pinch) to zoom, right-drag
   (or two-finger drag) to pan.
@@ -25,7 +25,7 @@ A tour of the four views and the things that aren't obvious at first glance.
 
 ## Schematics view
 
-![Schematics](https://raw.githubusercontent.com/covagashi/ecad-view/main/docs/screenshots/schematics.png)
+![Schematics](https://raw.githubusercontent.com/Canary-ECAD/ecad-view/main/docs/screenshots/schematics.png)
 
 - **Pan & zoom** — drag to pan, scroll/pinch to zoom, **double-click / double-tap**
   to refit the page.
@@ -41,7 +41,7 @@ A tour of the four views and the things that aren't obvious at first glance.
 
 ## Project view
 
-![Project info](https://raw.githubusercontent.com/covagashi/ecad-view/main/docs/screenshots/project-info.png)
+![Project info](https://raw.githubusercontent.com/Canary-ECAD/ecad-view/main/docs/screenshots/project-info.png)
 
 Reads the archive's `manifest.db` to show the real project: page count, 3D
 models, functions, locations, project properties (creator, company, EPLAN

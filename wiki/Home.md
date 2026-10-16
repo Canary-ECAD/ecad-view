@@ -5,9 +5,9 @@ your browser — no EPLAN installation, no server, nothing uploaded. Every file 
 parsed and rendered **locally on your device**, on desktop and mobile.
 
 - **Try it online:** [view.covaga.dev](https://view.covaga.dev)
-- **Source code:** [github.com/covagashi/ecad-view](https://github.com/covagashi/ecad-view)
+- **Source code:** [github.com/Canary-ECAD/ecad-view](https://github.com/Canary-ECAD/ecad-view)
 
-![3D viewer](https://raw.githubusercontent.com/covagashi/ecad-view/main/docs/screenshots/viewer-3d.png)
+![3D viewer](https://raw.githubusercontent.com/Canary-ECAD/ecad-view/main/docs/screenshots/viewer-3d.png)
 
 ## What can it do?
 

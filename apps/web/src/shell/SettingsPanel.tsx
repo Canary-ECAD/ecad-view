@@ -96,28 +96,32 @@ export function SettingsPanel({ onClose, showTheme = false }: SettingsPanelProps
         </>
       )}
 
-      <div className="rail-pop-sep" />
-      <div className="rail-pop-title">{t("settings.samples")}</div>
-      <button
-        className="rail-pop-action"
-        disabled={busy}
-        onClick={() => {
-          onClose?.();
-          void openDemo("/demo/ejemplo.epdz");
-        }}
-      >
-        {t("drop.demoProject")}
-      </button>
-      <button
-        className="rail-pop-action"
-        disabled={busy}
-        onClick={() => {
-          onClose?.();
-          void openDemo("/demo/pilz_pnoz_3d.e3d");
-        }}
-      >
-        {t("drop.demoPart")}
-      </button>
+      {import.meta.env.VITE_NO_SAMPLES !== "1" && (
+        <>
+          <div className="rail-pop-sep" />
+          <div className="rail-pop-title">{t("settings.samples")}</div>
+          <button
+            className="rail-pop-action"
+            disabled={busy}
+            onClick={() => {
+              onClose?.();
+              void openDemo("/demo/ejemplo.epdz");
+            }}
+          >
+            {t("drop.demoProject")}
+          </button>
+          <button
+            className="rail-pop-action"
+            disabled={busy}
+            onClick={() => {
+              onClose?.();
+              void openDemo("/demo/pilz_pnoz_3d.e3d");
+            }}
+          >
+            {t("drop.demoPart")}
+          </button>
+        </>
+      )}
 
       <div className="rail-pop-sep" />
       <div className="rail-pop-title">{t("settings.links")}</div>

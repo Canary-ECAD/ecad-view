@@ -142,6 +142,11 @@ Detailed notes live in [`docs/formats.md`](docs/formats.md):
   database), `packages/pages/**/*.svg` (schematic pages),
   `packages/installationspaces/**/*.E3d` (3D) and AutomationML.
 
+## Related
+
+- [Bochica](https://github.com/Canary-ECAD/bochica): a Windows desktop app to work
+  with EPLAN Electric P8 through an AI agent, in plain language.
+
 ## Contributing
 
 Contributions welcome — see [CONTRIBUTING.md](CONTRIBUTING.md).

@@ -74,8 +74,8 @@ EPLAN releases and is not yet documented).
 
 ```
 byte      formatVersion                (1..4)
-transform modelTransform
-vector    viewBox
+transform viewTransform                initial camera, see "Observed semantics"
+vector    viewParams                   meaning unknown, see "Observed semantics"
 color     backgroundTop
 color     backgroundBottom
 array<Light>    lights
@@ -107,7 +107,8 @@ array<EdgeGroup>  edges
   `short textureId` (−1 = none)
 - `EdgeStyle` = `color`, `float lineWidth`, `byte lineType`
 - `Elements` =
-  - v≥2 only: `vector center`
+  - v≥2 only: `vector center` (name kept for compatibility; it is not the
+    centroid of the group, see "Observed semantics")
   - `byte mode` — OpenGL-style: 0 points, 1 lineStrip, 2 lineLoop, 3 lines,
     4 triangleStrip, 5 triangleFan, 6 triangles
   - `long indexCount`
@@ -126,6 +127,68 @@ v4+: array<TextLine> textLines
 **TextLine** — `transform`, `float height`, `short justification` code
 (row: 1–3 bottom / 4–6 middle / 7+ top; column within the row: left, center,
 right), `string text`. Rendered height ≈ `0.75 × height`.
+
+### Observed semantics
+
+Findings from the seven installation-space files of `samples/ejemplo.epdz`
+(all format version 4), cross-checked against the archive's `manifest.db` and
+the geometry itself. Each item says how solid it is.
+
+**Structure (confirmed).** The layout above consumes every byte of all seven
+files. No index is out of range, no triangle is degenerate and every stored
+normal is unit length. All face groups use `triangles` and all edge groups use
+`lines`, always with `uint16` indices.
+
+**`viewTransform` is the initial camera, not a model transform (strong).** In
+every file the rotation part is the same isometric view (45° about Z, about 30°
+tilt) and its third basis vector equals the direction of the directional light,
+`(0.61, −0.61, 0.5)`: a headlight looking along the view axis. Only the
+translation changes per file. Do not apply it to the geometry; part transforms
+already place each part in world coordinates.
+
+**`viewParams` (unknown).** Values such as `(−568, 5571, 394)` do not match the
+scene's bounding box; files with the same content share the same values. They
+look like camera parameters (clipping planes or distance), unproven.
+
+**`Elements.center` (unknown).** It is neither the mean nor the bounding-box
+centre of the group's vertices (deviations up to ~380 mm). Keep it raw and do
+not rely on it.
+
+**Lights (confirmed for these files).** Always two: one directional (the
+headlight above) and one ambient.
+
+**Part colour alpha.** Only three values occur: 0 (opaque), 128 (50 %
+transparent) and 204 (80 % transparent). They follow the part's role (below),
+so they look like a display convention rather than per-part data.
+
+**Normals.** About half of the meshes (617 of 1 214) carry positions only
+(`vertexFlags = 1`). Consumers that need normals (STL, shading) must compute
+them from the faces.
+
+**`typeId` identifies the kind of object (strong for most rows).** Parts link
+to the project through `typeId/objectId`; the manifest stores the same pair
+as `…/<typeId>/<objectId>/…` in property `2000`, and routed wires as
+`connection3did`.
+
+| typeId | Parts | Role | Evidence |
+| --- | --- | --- | --- |
+| 166 | 580 | Routed wire | Matches the 580 `mergedconnection.connection3did` values one to one |
+| 180 | 1 151 | Device | Manifest `function`; text lines such as `-FC2:1`; 202 of them at 50 % alpha |
+| 173 | 33 | Cable duct | Manifest `function`, tags `-U4`…; e.g. 1 470 × 60 × 80 mm; 50 % alpha |
+| 178 | 21 | Mounting rail (DIN) | Manifest `function`; 35 × 15 mm cross-section |
+| 174 | 24 | Busbar | Manifest `function`, tags `-WE1`…; 15 × 5 mm cross-section |
+| 175 | 1 237 | Mounting surface (probable) | Flat (≤ 2 mm), 80 % alpha, not in manifest; the AML holds the same 1 237 `…/175/…` ids |
+| 176 | 7 | Unknown | Plates and 11 × 11 × 10 mm pieces; 307 `…/176/…` ids in the AML |
+| 185 | 77 | Unknown | Planar line-like shapes (one dimension 0) |
+| 187, 238 | 1 each | Unknown | |
+
+**Text lines.** Only devices, ducts, rails and busbars carry them (device tags
+and terminal designations). Justification codes seen map to left/centre/right
+on the middle row, plus a few bottom/top ones. The `+0.1` z offset in the
+viewer is a rendering choice, not file data.
+
+**Open.** Format versions above 4 (newer EPLAN releases) have not been seen
+yet; a sample is needed before documenting them.
 
 ### Coordinate system
 

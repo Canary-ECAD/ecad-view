@@ -22,8 +22,20 @@ tener el conversor E3D → STL.
       pertenece cada pieza.
 - [ ] Extraer taladros (`Hole, diameter`) y puntos de fijación.
 - [ ] Portar `reader.ts` (E3D) y comparar resultados con la v1 en los 7 E3D del ejemplo.
-- [ ] Revisar el código de lectura E3D que aporta el usuario como referencia
-      (solo para entender el formato; no se copia código de terceros).
+- [ ] Aplicar lo observado en `docs/formats.md` ("Observed semantics"):
+  - [ ] Tratar `viewTransform` como cámara inicial; no aplicarlo a la geometría.
+  - [ ] Guardar `viewParams` y `Elements.center` en bruto, sin darles significado.
+  - [ ] Clasificar piezas por `typeId` (cable, dispositivo, canaleta, carril,
+        embarrado, superficie de montaje, desconocido) y enlazarlas con el
+        manifest por `typeId/objectId`.
+  - [ ] Calcular normales en las mallas que no las traen.
+  - [ ] Límites de tamaño en arrays y buffers (un archivo corrupto no puede
+        agotar la memoria).
+- [ ] Identificar los `typeId` 176, 185, 187 y 238 cruzándolos con el AML.
+- [ ] Conseguir un E3D de versión > 4 (EPLAN 2025/2026) y documentarlo
+      analizando el archivo.
+- [ ] El conversor STL exporta por defecto solo piezas físicas (sin superficies
+      de montaje ni piezas sin identificar), con opción de incluirlas.
 - [ ] Escritor STL binario aplicando las transformaciones de cada pieza; normales
       recalculadas; eje Z hacia arriba.
 - [ ] Tests: el STL generado abre en un visor estándar y sus dimensiones coinciden

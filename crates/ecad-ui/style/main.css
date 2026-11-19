@@ -1,0 +1,146 @@
+/* ECAD View v2: estilos propios con tokens, sin framework.
+   Pensado para 1920×1080 en horizontal y luz de nave: contraste alto,
+   objetivos táctiles de 40 px como mínimo. */
+
+:root {
+  color-scheme: light;
+  --bg: #eef0f2;
+  --surface: #ffffff;
+  --surface-2: #f6f7f8;
+  --line: #c9ced4;
+  --text: #14181c;
+  --text-muted: #4d5862;
+  --accent: #0b5cad;
+  --accent-text: #ffffff;
+  --sheet: #ffffff;
+
+  --font: system-ui, "Segoe UI", Roboto, sans-serif;
+  --mono: ui-monospace, "Cascadia Mono", Consolas, monospace;
+  --text-sm: 14px;
+  --text-md: 16px;
+  --text-lg: 18px;
+
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --radius: 6px;
+  --target: 40px;
+  --topbar-h: 48px;
+  --sidebar-w: 340px;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    color-scheme: dark;
+    --bg: #101316;
+    --surface: #181c20;
+    --surface-2: #1f2428;
+    --line: #333b42;
+    --text: #eef1f3;
+    --text-muted: #a5b0ba;
+    --accent: #5aa6ff;
+    --accent-text: #08121d;
+    /* La hoja del esquema sigue siendo blanca: los colores de EPLAN lo asumen. */
+    --sheet: #ffffff;
+  }
+}
+
+* { box-sizing: border-box; }
+
+html, body {
+  margin: 0;
+  height: 100%;
+  background: var(--bg);
+  color: var(--text);
+  font: var(--text-md)/1.4 var(--font);
+}
+
+button {
+  min-width: var(--target);
+  min-height: var(--target);
+  padding: 0 var(--space-3);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--surface);
+  color: var(--text);
+  font: inherit;
+  cursor: pointer;
+}
+button:hover { background: var(--surface-2); }
+button:focus-visible, a:focus-visible, .canvas:focus-visible {
+  outline: 3px solid var(--accent);
+  outline-offset: -3px;
+}
+
+.muted { color: var(--text-muted); }
+.pad { padding: var(--space-4); }
+
+.app {
+  display: grid;
+  grid-template-columns: var(--sidebar-w) 1fr;
+  grid-template-rows: var(--topbar-h) 1fr;
+  grid-template-areas: "top top" "side main";
+  height: 100vh;
+}
+
+.topbar {
+  grid-area: top;
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+  padding: 0 var(--space-4);
+  background: var(--surface);
+  border-bottom: 1px solid var(--line);
+}
+.brand { font-weight: 700; font-size: var(--text-lg); }
+.project { color: var(--text-muted); font-family: var(--mono); }
+
+.sidebar {
+  grid-area: side;
+  overflow-y: auto;
+  background: var(--surface);
+  border-right: 1px solid var(--line);
+}
+.pages { list-style: none; margin: 0; padding: var(--space-2); }
+.pages a {
+  display: flex;
+  gap: var(--space-3);
+  align-items: center;
+  min-height: var(--target);
+  padding: var(--space-2) var(--space-3);
+  border-radius: var(--radius);
+  color: var(--text);
+  text-decoration: none;
+}
+.pages a:hover { background: var(--surface-2); }
+.pages a[aria-current="page"] { background: var(--accent); color: var(--accent-text); }
+.pages .num { min-width: 2ch; text-align: right; font-variant-numeric: tabular-nums; opacity: 0.8; }
+.pages .title { font-family: var(--mono); font-size: var(--text-sm); word-break: break-all; }
+
+.main { grid-area: main; min-width: 0; min-height: 0; }
+
+.viewer { display: flex; flex-direction: column; height: 100%; }
+.toolbar {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-2) var(--space-3);
+  background: var(--surface);
+  border-bottom: 1px solid var(--line);
+}
+.toolbar .zoom { min-width: 6ch; text-align: center; font-variant-numeric: tabular-nums; }
+.toolbar .spacer { flex: 1; }
+.toolbar .status { min-width: 8ch; text-align: right; font-variant-numeric: tabular-nums; }
+
+.canvas {
+  flex: 1;
+  min-height: 0;
+  overflow: hidden;
+  background: var(--sheet);
+  cursor: grab;
+  touch-action: none;
+  user-select: none;
+}
+.canvas:active { cursor: grabbing; }
+.canvas > svg { display: block; }

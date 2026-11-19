@@ -12,10 +12,10 @@ apps/mobile/ios/
 # Paquetes generados localmente (incluye keystore de firma — nunca commitear)
 dist-packages/
 
-# Estado local de las sesiones de $impeccable live (PRODUCT.md, DESIGN.md y
-# .impeccable/design.json y config.json sí se versionan)
-.impeccable/live/sessions/
 .tmp-audit/
 
 # Crash dumps from Git Bash / MSYS
 *.stackdump
+
+# Rust (v2)
+/target/

@@ -1,0 +1,61 @@
+[workspace]
+resolver = "3"
+members = ["crates/*"]
+
+[workspace.package]
+version = "0.1.0"
+edition = "2024"
+rust-version = "1.100"
+license = "MIT"
+repository = "https://github.com/Canary-ECAD/ecad-view"
+publish = false
+
+[workspace.dependencies]
+ecad-core = { path = "crates/ecad-core" }
+ecad-ui = { path = "crates/ecad-ui" }
+
+sevenz-rust2 = { version = "0.25", default-features = false, features = ["bzip2", "ppmd"] }
+rusqlite = { version = "0.43", features = ["bundled"] }
+quick-xml = "0.42"
+serde = { version = "1", features = ["derive"] }
+thiserror = "2"
+tracing = "0.1"
+tracing-subscriber = { version = "0.3", features = ["env-filter"] }
+tokio = { version = "1", features = ["rt-multi-thread", "macros", "net", "signal"] }
+axum = "0.8"
+tower-http = { version = "0.6", features = ["fs", "compression-gzip"] }
+leptos = "0.8"
+leptos_axum = "0.8"
+leptos_meta = "0.8"
+leptos_router = "0.8"
+wasm-bindgen = "0.2"
+wasm-bindgen-futures = "0.4"
+web-sys = "0.3"
+console_error_panic_hook = "0.1"
+
+[workspace.lints.rust]
+unsafe_code = "forbid"
+
+[workspace.lints.clippy]
+all = { level = "warn", priority = -1 }
+
+[profile.wasm-release]
+inherits = "release"
+opt-level = "z"
+lto = true
+codegen-units = 1
+panic = "abort"
+
+# cargo-leptos: `cargo leptos watch` / `cargo leptos build --release`
+[[workspace.metadata.leptos]]
+name = "ecad"
+bin-package = "ecad-server"
+lib-package = "ecad-ui"
+site-root = "target/site"
+site-pkg-dir = "pkg"
+style-file = "crates/ecad-ui/style/main.css"
+site-addr = "127.0.0.1:3000"
+reload-port = 3001
+bin-features = []
+lib-features = ["hydrate"]
+lib-profile-release = "wasm-release"

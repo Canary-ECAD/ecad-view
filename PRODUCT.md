@@ -1,105 +1,84 @@
-# Product
+# Producto
 
-## Register
+ECAD View v2: la herramienta del **taller de fabricación de cuadros
+eléctricos** para cablear, montar y comprobar un armario a partir del `.epdz`
+que exporta EPLAN. Alcance completo y plan por sprints en
+[docs/v2/README.md](docs/v2/README.md).
 
-product
+## Usuarios
 
-## Users
+1. **Montador / cableador** (principal). Delante del armario, con un monitor de
+   22" en el puesto o un monitor portátil de 15,6" en obra. Ratón, a veces
+   pantalla táctil, a veces con guantes. Luz de nave: fluorescentes, reflejos,
+   rincones mal iluminados. Quiere saber qué cable toca ahora, cómo es
+   (sección, color, punteras, pelado), de dónde a dónde va y por dónde pasa, y
+   marcarlo como hecho sin pelearse con la herramienta.
+2. **Oficina técnica.** Sube el `.epdz` exportado de EPLAN, publica cada
+   revisión y responde a los comentarios del taller. No quiere tocar dos veces
+   un dato que ya está en EPLAN.
+3. **Jefe de taller / calidad.** Ve el avance por proyecto, armario y operario,
+   y quién ha hecho y comprobado cada cosa. Necesita poder enseñar esa
+   trazabilidad a un cliente o en una auditoría.
 
-Ingenieros y montadores eléctricos revisando una instalación **in situ**: delante
-del armario o de la máquina, con una tablet o un móvil en la mano, luz variable
-(nave con fluorescentes, exterior, un rincón mal iluminado), a menudo con una
-sola mano libre y sin ganas de esperar.
+## Para qué sirve
 
-El trabajo a hacer es siempre una comprobación contra la realidad física:
-"¿qué borne es este?", "¿dónde aparece este dispositivo en el esquema?",
-"¿qué pieza es esta del modelo 3D y cómo se llama en el proyecto?". Llegan con
-un `.epdz` que alguien exportó desde EPLAN y no tienen (ni quieren tener) EPLAN
-instalado.
+Que el dato de fabricación que ya existe en el proyecto EPLAN llegue al puesto
+de trabajo entero y legible, y que el trabajo hecho quede registrado:
 
-El proyectista de oficina es un usuario secundario real: mismas pantallas,
-monitor grande y sesiones más largas. La UI no debe romperse ahí, pero cuando
-haya que elegir, gana el caso de campo.
+- **Cablear:** lista de cableado con todo lo que trae el `.epdz` (extremos,
+  punteras, dirección de salida, recorrido, puentes), localizable en esquema y
+  en la vista frontal de la placa, con estado por cable y por extremo.
+- **Montar:** lista de montaje, picking de material, taladros y etiquetas.
+- **Revisar:** cuando llega una revisión nueva, qué cambia, qué hay que
+  desmontar y qué trabajo hecho queda pendiente de revisar.
+- **Seguir:** avance, comentarios y quién hizo qué y cuándo.
 
-## Product Purpose
+Éxito: un cableador termina un armario sin imprimir la lista de cableado ni
+llamar a la oficina, y el jefe de taller sabe en todo momento qué falta.
 
-Abrir proyectos EPLAN (`.epdz`) y piezas 3D (`.e3d`) en el navegador, sin
-instalación, sin servidor y sin subir nada: todo se extrae, parsea y renderiza
-en el dispositivo. Un `.epdz` deja de ser un archivo que solo abre quien tiene
-la licencia y pasa a ser algo que cualquiera del equipo puede consultar.
+## Personalidad
 
-Cubre esquemas SVG con navegación de referencias cruzadas, visor 3D de espacios
-de instalación, índice de dispositivos, árbol de proyecto y metadatos leídos del
-`manifest.db`. Se distribuye como PWA instalable y offline, con envolturas
-nativas finas (Tauri en escritorio, Capacitor en móvil) sobre el mismo núcleo web.
+**Precisa, directa, de taller.** Habla el idioma del proyecto y del oficio
+(cable, borne, puntera, placa, armario, revisión) y no el de la exportación
+(`typeId`, `propid`, rutas del archivo). Responde en una frase y no adorna:
+nombra la cosa, no la celebra. La confianza se gana con datos correctos y
+rapidez, no con adjetivos.
 
-Éxito: alguien delante del armario encuentra el dispositivo que busca en menos
-tiempo del que tardaría en llamar a la oficina, y sin que ningún archivo salga
-de su dispositivo.
+## Anti-referencias
 
-## Brand Personality
+- **EPLAN y el CAD clásico.** Ribbons cargados, diálogos grises con biseles,
+  densidad sin jerarquía.
+- **SaaS genérico.** Rejillas de tarjetas redondeadas, degradados, cifras
+  gigantes de adorno, ilustraciones de stock.
+- **Interfaz de móvil estirada.** Mucho aire y poco dato en un monitor de
+  1080p: aquí la pantalla está para llenarla de información útil.
 
-**Claro, técnico, desdramatizado.** Es EPLAN sin EPLAN: la misma información,
-sin la barrera de la herramienta. Habla el vocabulario del proyecto (dispositivo,
-página, espacio de instalación, referencia cruzada) porque su usuario lo habla,
-pero no arrastra la jerga interna de la exportación (`typeId`, `objectId`, rutas
-del archivo) a la superficie.
+## Principios de diseño
 
-El tono es el de un compañero competente que responde en una frase: nombra la
-cosa, no la celebra. Nada de entusiasmo de producto, nada de disculpas, nada de
-copy que explique lo que ya se ve en pantalla. La confianza se transmite por
-precisión y velocidad, no por adjetivos.
+1. **El dato de fabricación manda.** Todo lo que el `.epdz` trae y sirve para
+   fabricar se muestra; nada se esconde detrás de "más detalles" si el
+   operario lo necesita para el siguiente cable.
+2. **Densidad ordenada.** Pantallas de 1920×1080 en horizontal llenas de
+   información, con jerarquía clara (peso, agrupación, alineación). La
+   respuesta a "está muy cargado" es ordenar, no quitar.
+3. **Se lee a un metro.** Contraste alto para luz de nave y tamaños que se leen
+   de pie delante del armario. Objetivos táctiles de 40 px como mínimo para
+   monitores portátiles táctiles y uso con guantes.
+4. **El esquema es nítido.** Las páginas y la vista de placa se dibujan como
+   vectores, con zoom sin pérdida y desplazamiento inmediato.
+5. **Propio y trazable.** Todo corre en la red de la empresa, sin servicios
+   externos ni telemetría. Cada cambio de estado queda registrado con usuario y
+   hora, y una revisión nueva nunca borra trabajo hecho: lo marca para revisar.
+6. **Honesta con lo desconocido.** Si un dato del archivo no se puede
+   interpretar, se dice, en lugar de inventar o callarlo.
 
-Emocionalmente busca **alivio**: el archivo se abre, se entiende, y la duda que
-trajo el usuario queda resuelta.
+## Accesibilidad
 
-## Anti-references
-
-- **EPLAN y el CAD legacy.** Ribbons cargados, iconografía de los 2000, diálogos
-  grises con biseles 3D, densidad sin jerarquía. Es de lo que la gente viene
-  huyendo; reproducirlo anula la razón de existir del proyecto.
-- **SaaS genérico.** Rejillas de cards redondeadas, gradientes morados, hero con
-  métricas grandes, ilustraciones flat de stock. Esto es una herramienta de
-  consulta técnica, no una landing de startup.
-- **Estética de juguete.** Animaciones exageradas, colores saturados, emojis,
-  esquinas muy redondeadas. Rompe la credibilidad delante de un ingeniero.
-- **Minimalismo vacío.** Tanto aire y tan poco dato que hay que dar cuatro clics
-  para ver lo que antes se veía de un vistazo. La densidad aquí es una función,
-  no un defecto: el objetivo es densidad *ordenada*, no menos información.
-
-## Design Principles
-
-1. **El plano es el protagonista.** El esquema y el modelo 3D son el contenido;
-   todo cromo (rail, paneles, barras) cede espacio, contraste y atención al
-   lienzo. Si un elemento de UI no ayuda a leer el plano, sobra.
-2. **Densidad ordenada, no aire.** La respuesta a "está muy cargado" es
-   jerarquía (peso, agrupación, alineación), nunca quitar datos ni esconderlos
-   detrás de más navegación.
-3. **Una mano, a distancia de brazo.** Cada acción principal debe alcanzarse con
-   el pulgar y leerse sin acercar la pantalla. El caso de campo define los
-   mínimos de tamaño y contraste; el escritorio hereda, no al revés.
-4. **Los datos del proyecto se traducen, no se filtran en crudo.** Lo que viene
-   del `manifest.db` o del binario E3D se muestra con el nombre que el usuario
-   reconoce. Los identificadores internos son depuración, no interfaz.
-5. **Local y honesto.** Nada sale del dispositivo, y la UI lo demuestra con su
-   comportamiento (funciona offline, sin cuentas, sin esperas de red). Cuando
-   algo del archivo no se puede interpretar, se dice claramente en vez de
-   fingir que no existe.
-
-## Accessibility & Inclusion
-
-**Prioridad declarada: legibilidad con luz dura.** Uso en taller, con la pantalla
-a media luminosidad y bajo sol o fluorescentes. El contraste real y el tamaño
-mínimo legible mandan sobre la elegancia: nada de texto gris claro "para que
-respire", ni etiquetas por debajo del tamaño de cuerpo en superficies que se
-leen a distancia de brazo. Ante la duda, el texto se acerca al extremo de tinta
-de la rampa.
-
-No se ha fijado un nivel WCAG formal como compromiso del proyecto. Trátese
-4.5:1 en texto de cuerpo como el listón de trabajo derivado de la prioridad
-anterior, no como una conformidad auditada.
-
-El tema oscuro es el predeterminado y existe tema claro (`data-theme="light"`);
-ambos deben cumplir la prioridad de legibilidad, no solo el oscuro. La app tiene
-ocho idiomas de interfaz, así que las etiquetas deben aguantar cadenas más
-largas que el español sin desbordar.
+- Texto de cuerpo con contraste mínimo de 4,5:1 en los dos temas (claro por
+  defecto en taller; oscuro disponible). La hoja del esquema sigue siendo
+  blanca en ambos porque los colores de EPLAN lo asumen.
+- Todo se puede manejar con teclado; el foco se ve siempre.
+- El estado nunca se comunica solo con color (hecho / pendiente / revisar
+  llevan también icono o texto).
+- Interfaz en español primero; las etiquetas deben aguantar textos más largos
+  de otros idiomas sin desbordar.

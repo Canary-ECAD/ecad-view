@@ -1,0 +1,18 @@
+[package]
+name = "ecad-core"
+description = "Lectura de formatos EPLAN: .epdz (7z), manifest.db, AML y E3D."
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+repository.workspace = true
+publish.workspace = true
+
+[dependencies]
+sevenz-rust2.workspace = true
+quick-xml.workspace = true
+rusqlite.workspace = true
+thiserror.workspace = true
+
+[lints]
+workspace = true

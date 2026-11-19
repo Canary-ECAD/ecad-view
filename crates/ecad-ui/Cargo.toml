@@ -1,0 +1,40 @@
+[package]
+name = "ecad-ui"
+description = "Interfaz web en Leptos (SSR en el servidor, hidratada en WASM en el navegador)."
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+repository.workspace = true
+publish.workspace = true
+
+[lib]
+crate-type = ["cdylib", "rlib"]
+
+[dependencies]
+leptos.workspace = true
+leptos_meta.workspace = true
+leptos_router.workspace = true
+serde.workspace = true
+wasm-bindgen.workspace = true
+wasm-bindgen-futures.workspace = true
+web-sys = { workspace = true, features = [
+    "DomRect",
+    "Element",
+    "HtmlElement",
+    "Performance",
+    "PointerEvent",
+    "Response",
+    "WheelEvent",
+    "Window",
+] }
+console_error_panic_hook = { workspace = true, optional = true }
+
+[features]
+# Navegador: cargo-leptos compila el crate a WASM con esta feature.
+hydrate = ["leptos/hydrate", "dep:console_error_panic_hook"]
+# Servidor: renderizado en Axum y cuerpo de las funciones de servidor.
+ssr = ["leptos/ssr", "leptos_meta/ssr", "leptos_router/ssr"]
+
+[lints]
+workspace = true

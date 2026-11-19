@@ -13,7 +13,7 @@ use axum::extract::{Extension, Path as UrlPath};
 use axum::http::{StatusCode, header};
 use axum::response::{IntoResponse, Response};
 use axum::routing::get;
-use ecad_core::{Archive, svg};
+use ecad_core::{Epdz, svg};
 use ecad_ui::store::{Project, ProjectStore, StoredPage};
 use ecad_ui::{App, shell};
 use leptos::prelude::*;
@@ -76,31 +76,45 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
     Ok(())
 }
 
-/// Abre el `.epdz` y prepara las páginas saneadas.
+/// Abre el `.epdz` y prepara las páginas saneadas, en el orden del proyecto.
 fn load(path: &Path) -> Result<ProjectStore, ecad_core::Error> {
     let t = Instant::now();
-    let archive = Archive::open(path)?;
+    let epdz = Epdz::open(path)?;
+    let project = epdz.project();
     let mut pages = Vec::new();
-    for entry in archive.with_extension("svg") {
-        let text = String::from_utf8_lossy(&entry.data);
+    for page in &project.pages {
+        let Some(data) = page.file.as_deref().and_then(|f| epdz.get(f)) else {
+            tracing::warn!("{}: sin SVG en el archivo", page.name);
+            continue;
+        };
+        let text = String::from_utf8_lossy(data);
+        let title = match (page.designation.full.as_str(), &page.description) {
+            ("", None) => svg::title(&text).unwrap_or_else(|| page.name.clone()),
+            ("", Some(d)) => d.clone(),
+            (designation, None) => designation.to_owned(),
+            (designation, Some(d)) => format!("{designation} {d}"),
+        };
         pages.push(StoredPage {
-            title: svg::title(&text).unwrap_or_else(|| entry.name.clone()),
+            title,
             svg: svg::sanitize_with(&text, Some(ASSETS))?,
         });
     }
-    // Provisional: el orden real de las páginas sale de manifest.db (sprint 1).
-    pages.sort_by(|a, b| a.title.cmp(&b.title));
-    let assets = archive
-        .entries()
-        .iter()
+    let assets = epdz
+        .images()
         .filter(|e| e.name.contains("/pagesvg/") && content_type(&e.name).is_some())
         .filter_map(|e| Some((e.name.rsplit('/').next()?.to_owned(), e.data.clone())))
         .collect();
 
-    let name = path
-        .file_stem()
-        .map_or_else(String::new, |s| s.to_string_lossy().into_owned());
-    tracing::info!("{name}: {} páginas en {:?}", pages.len(), t.elapsed());
+    let name = project.header.name.clone().unwrap_or_else(|| {
+        path.file_stem()
+            .map_or_else(String::new, |s| s.to_string_lossy().into_owned())
+    });
+    tracing::info!(
+        "{name}: {} páginas, {} conexiones en {:?}",
+        pages.len(),
+        project.connections.len(),
+        t.elapsed()
+    );
     Ok(ProjectStore(std::sync::Arc::new(Project {
         name,
         pages,

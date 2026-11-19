@@ -23,7 +23,7 @@ crates/
   ecad-front    proyección frontal E3D -> SVG (vacío hasta el sprint 5)
   ecad-server   Axum + Leptos SSR; binario único
   ecad-ui       componentes Leptos (SSR + hidratación en WASM)
-  ecad-cli      binario `ecad` (de momento, `ecad ls <archivo.epdz>`)
+  ecad-cli      binario `ecad`: `ecad ls` y `ecad inspect [--json]`
 ```
 
 Las versiones de las dependencias se declaran una sola vez en
@@ -137,5 +137,8 @@ vez, `cargo-leptos` descarga `wasm-bindgen` y `wasm-opt`.
 - En un puesto Windows con el host GNU, el ejecutable de pruebas vacío de
   `ecad-cli` fue bloqueado ("Acceso denegado", probablemente el antivirus).
   Como el binario no tiene tests, lleva `test = false`.
-- El orden de las páginas es provisional (por título); el orden real sale de
-  `manifest.db` en el sprint 1.
+- Desde el sprint 1, el orden de las páginas es el de `manifest.db` (orden
+  de los objetos, el del navegador de EPLAN).
+- `manifest.db` se abre en memoria con `sqlite3_deserialize` (feature
+  `serialize` de `rusqlite`), sin escribir un fichero temporal, y se lee
+  entero de una vez (~115 000 propiedades en < 0,5 s en debug).

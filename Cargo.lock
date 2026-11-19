@@ -436,6 +436,7 @@ name = "ecad-cli"
 version = "0.1.0"
 dependencies = [
  "ecad-core",
+ "serde_json",
 ]
 
 [[package]]
@@ -444,6 +445,8 @@ version = "0.1.0"
 dependencies = [
  "quick-xml",
  "rusqlite",
+ "serde",
+ "serde_json",
  "sevenz-rust2",
  "thiserror 2.0.21",
 ]

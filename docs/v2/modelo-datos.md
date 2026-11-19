@@ -37,7 +37,7 @@ tipo (`function_package`, `mergedconnection_package`, `location_package`,
 | Propiedad | Significado | Ejemplo | Estado |
 | --- | --- | --- | --- |
 | ep.31019 / ep.31020 | Origen / destino | `=VA2+A1-FC1:6/T3` | Seguro |
-| ep.31144 / ep.31145 | Origen / destino con dirección de salida | `+A1-FC2:1 HR` | Sufijo por confirmar (TL, R, HR…) |
+| ep.31144 / ep.31145 | Origen / destino con dirección de salida | `+A1-FC2:1 HR` | Sufijo por confirmar (HL, HR, TL, TR, RH, RT, R, LT, LH, `undefined`). **No siempre van en orden origen/destino** (28 de 545 cruzadas): se asignan por designación |
 | ep.31004 | Color | `WH` | Seguro |
 | ep.31007 · ep.31002 · ep.31060 | Sección con unidad · valor · unidad | `0,25 mm²` | Seguro |
 | ep.31003 · ep.31000 | Longitud con unidad · en metros | `0,18 m` | Seguro |
@@ -46,13 +46,29 @@ tipo (`function_package`, `mergedconnection_package`, `location_package`,
 | ep.31055 / ep.31056 | Longitud de pelado origen / destino | `10 mm` | Probable. **No se muestra** |
 | ep.33003 · ep.20045 | Potencial / señal | `PE`, `24 VDC PLC` | Seguro |
 | ep.31095 | Canaleta o recorrido | `+B3.X1-U106` | Probable. **No se muestra** |
-| ep.31148–31153 | Coordenadas x/y/z de origen y destino | `989.01…` | Probable |
-| ep.31006, 31011, 31058, 31092, 31114, 31115, 31155 | Sin identificar | | Investigar en sprint 1 |
+| ep.31148–31150 · ep.31151–31153 | x, y, z del origen · x, y, z del destino (mm) | `375.2` | Probable. Orden comprobado: el destino de un tramo coincide con el origen del siguiente en las cadenas de puentes |
+| ep.31011 | Designación de la conexión (número de hilo / tubo) | `13-ø` | Probable. Solo en los 25 tubos del ejemplo |
+| ep.20006 | Cable multipolar al que pertenece el conductor | `+A2-WD8` | Seguro. `+` si no va en cable |
+| ep.20188 | Definición de función de la conexión | `4/1/4` | Probable: `4/1/4` hilo, `4/1/7` y `4/1/9` puentes, `4/1/15` tubo, `4/1/10` y `4/1/17` internas del dispositivo |
+| ep.31058 | Siempre `1` en conductores de cable multipolar (209 = los de ep.20006) | `1` | Sin identificar |
+| ep.31006 | Valores 2–7, en 207 conexiones de todo tipo | `3` | Sin identificar |
+| ep.31092, 31114, 31115 | Enteros pequeños (1–34, 1–11, 1–12), solo en conexiones enrutadas; los tubos llevan 31092 = 34 | `29` | Sin identificar |
+| ep.31155 | Entero único por conexión enrutada (544) | `525` | Sin identificar; ¿orden de enrutado? |
 | `source.35575` / `destination.35575` | Par de apriete (?) | `2.5` | Por confirmar |
 | `source.35576` / `destination.35576` | Tamaño de destornillador / boca (?) | `3` | Por confirmar |
 | `daisychainid` · `daisyChainorderid` | Cadena de puentes y orden | `9` · `7` | Seguro |
 | `connection3did` | Pieza 3D del cable enrutado | `166/60765` | Seguro |
 | `connectionoid` | Conexiones EPLAN originales agrupadas | `253/233/61888/0` | Seguro |
+
+Clasificación (`ecad_core::project::ConnectionKind`): **tubo** si ep.20188 es
+`4/1/15`, el tipo empieza por `PUN` o la sección es un diámetro (`8mm`);
+**conductor de cable** si ep.20006 nombra un cable; **puente** si origen y
+destino son del mismo dispositivo; **hilo** el resto. En el ejemplo: 581 hilos,
+32 puentes, 25 tubos y 209 conductores de cable.
+
+En el modelo, lo probable y lo por confirmar va envuelto con su estado
+(`{"value": …, "certainty": "probable" | "unconfirmed"}`) y lo sin identificar
+se guarda en bruto en `unidentified`.
 
 Las propiedades "por confirmar" se validan contra una exportación conocida en
 EPLAN antes de mostrarlas; mientras tanto se guardan pero no se enseñan.

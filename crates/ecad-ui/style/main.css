@@ -116,7 +116,7 @@ button:focus-visible, a:focus-visible, .canvas:focus-visible {
 .pages a:hover { background: var(--surface-2); }
 .pages a[aria-current="page"] { background: var(--accent); color: var(--accent-text); }
 .pages .num { min-width: 2ch; text-align: right; font-variant-numeric: tabular-nums; opacity: 0.8; }
-.pages .title { font-family: var(--mono); font-size: var(--text-sm); word-break: break-all; }
+.pages .title { font-family: var(--mono); font-size: var(--text-sm); overflow-wrap: anywhere; }
 
 .main { grid-area: main; min-width: 0; min-height: 0; }
 

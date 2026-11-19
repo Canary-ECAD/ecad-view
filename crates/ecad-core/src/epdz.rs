@@ -4,6 +4,8 @@
 use std::io::{Read, Seek};
 use std::path::Path;
 
+use crate::aml::Aml;
+use crate::e3d::Scene;
 use crate::manifest::Manifest;
 use crate::project::Project;
 use crate::{Archive, Entry, Error, Result};
@@ -83,6 +85,18 @@ impl Epdz {
     /// Construye el modelo de proyecto.
     pub fn project(&self) -> Project {
         Project::from_manifest(&self.manifest)
+    }
+
+    /// Lee el AutomationML del archivo, si lo trae.
+    pub fn aml(&self) -> Result<Option<Aml>> {
+        self.amls().next().map(|e| Aml::parse(&e.data)).transpose()
+    }
+
+    /// Lee el E3D de una entrada (ruta exacta, como en
+    /// [`crate::project::InstallationSpace::file`]).
+    pub fn scene(&self, name: &str) -> Result<Scene> {
+        let data = self.get(name).ok_or(Error::Missing("E3D"))?;
+        Ok(Scene::parse(data)?)
     }
 
     /// Entradas de un tipo, en el orden del archivo.
